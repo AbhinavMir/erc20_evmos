@@ -10,7 +10,7 @@ import (
     "github.com/ethereum/go-ethereum/common"
     "github.com/ethereum/go-ethereum/ethclient"
 
-    token "../contracts/ERC20.sol"
+    token "erc20.go"
 )
 
 func main() {
