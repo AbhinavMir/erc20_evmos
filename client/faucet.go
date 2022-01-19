@@ -14,15 +14,16 @@ import (
     "github.com/ethereum/go-ethereum/core/types"
     "github.com/ethereum/go-ethereum/crypto"
     "github.com/ethereum/go-ethereum/ethclient"
+    "os"
 )
 
 func main() {
-    client, err := ethclient.Dial("https://rinkeby.infura.io")
+    client, err := ethclient.Dial("https://ethereum.rpc.evmos.dev")
     if err != nil {
         log.Fatal(err)
     }
 
-    privateKey, err := crypto.HexToECDSA("fad9c8855b740a0b7ed4c221dbad0f33a83a49cad6b3fe8d5817ac83d38b6a19")
+    privateKey, err := crypto.HexToECDSA(os.Getenv("PRIVATE_KEY"))
     if err != nil {
         log.Fatal(err)
     }
@@ -39,14 +40,14 @@ func main() {
         log.Fatal(err)
     }
 
-    value := big.NewInt(0) // in wei (0 eth)
+    value := big.NewInt(1000000) // in wei (0 eth)
     gasPrice, err := client.SuggestGasPrice(context.Background())
     if err != nil {
         log.Fatal(err)
     }
 
-    toAddress := common.HexToAddress("0x4592d8f8d7b001e72cb26a73e4fa1806a51ac79d")
-    tokenAddress := common.HexToAddress("0x28b149020d2152179873ec60bed6bf7cd705775d")
+    toAddress := common.HexToAddress("0xB47E50B7B67971713f80eC7Ec26332f18a7CF738")
+    tokenAddress := common.HexToAddress("0x6aDdAd1d834D015E7eD839A15F586def146d2d2A")
 
     transferFnSignature := []byte("transfer(address,uint256)")
     hash := sha3.NewLegacyKeccak256()
@@ -68,10 +69,8 @@ func main() {
     data = append(data, paddedAddress...)
     data = append(data, paddedAmount...)
 
-    gasLimit, err := client.EstimateGas(context.Background(), ethereum.CallMsg{
-        To:   &tokenAddress,
-        Data: data,
-    })
+    gasLimit = uint64(240000)
+
     if err != nil {
         log.Fatal(err)
     }
