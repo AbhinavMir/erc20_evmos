@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ethers } from "ethers";
 import genericErc20Abi from "./generic.js";
 
@@ -38,18 +38,14 @@ function App() {
   }
 
   async function sendToken() {
-    // var integer = parseInt(amt, 10);
-    // const gweiValue = ethers.utils.formatUnits(integer, "ether");
-    // console.log(gweiValue);
-    // const tx = await contract.transfer(rAdress, integer);
     const tx = await contract.transfer(rAdress, ethers.utils.parseEther(amt));
     setRadress("");
     setAmt("");
-    // console.log(`Transaction hash: ${tx.hash}`);
-    // const receipt = await tx.wait();
-    // console.log(`Transaction confirmed in block ${receipt.blockNumber}`);
-    // console.log(`Gas used: ${receipt.gasUsed.toString()}`);
-    // console.log(tx);
+  }
+
+  async function mintTokens() {
+    const mint_tx = await contract.mint(userAddress, 50);
+    console.log(mint_tx);
   }
 
   return (
@@ -99,6 +95,7 @@ function App() {
             Continue
           </button>
         </div>
+        <button onClick={mintTokens}>Mint 50 EGMS</button>
       </div>
     </div>
   );
