@@ -229,8 +229,6 @@ function App() {
         "type": "event"
     }
 ]
-  const [rAdress, setRadress] = useState("");
-  const [amt, setAmt] = useState("");
 
   const handleMetamask = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
@@ -256,16 +254,10 @@ function App() {
     setUserBal(balance);
   }
 
-  async function sendToken() {
-    const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
-    const signer = provider.getSigner();
+  async function sendToken(address, amount) {
     const contract = new ethers.Contract(tokenContractAddress, genericErc20Abi, signer);
-    //console.log(await contract.transfer());
-    const tx = await contract.transfer(rAdress, amt);
+    const tx = await contract.transfer(address, amount);
     console.log(tx);
-
-    setRadress("");
-    setAmt("");
   }
 
   return (
@@ -273,49 +265,35 @@ function App() {
       <div className="mainContainer">
         {/* Black box */}
         <div className="innerContainer">
-          {userBal && (
-            <>
-              <p style={{ fontSize: "1.2rem", margin: "0.2rem" }}>You have:</p>
-              <p style={{ fontSize: "2rem", margin: "0.2rem" }}>
-                {userBal}
-                <span style={{ fontSize: "1rem" }}>egms</span>
-              </p>
-            </>
-          )}
-
+          <p style={{ fontSize: "1.2rem", margin: "0.2rem" }}>You have:</p>
+          <p style={{ fontSize: "2rem", margin: "0.2rem" }}>
+            {userBal}
+            <span style={{ fontSize: "1rem" }}>EGMS</span>
+          </p>
           {login ? (
             <p className="adress2">{userAddress}</p>
           ) : (
-            <button className="adress" onClick={handleMetamask}>
+            <button className="address" onClick={handleMetamask}>
               Connect to Metamask
             </button>
           )}
         </div>
         {/* Form */}
         <div className="inputContainer">
-          <h2>Transfer Usdt</h2>
+          <h2>Transfer EGMS</h2>
           <form>
             <p>Reciever Adress</p>
-            <input
-              className="inputField"
-              value={rAdress}
-              type="text"
-              onInput={(e) => setRadress(e.target.value)}
-            />
+            <input className="inputField" type="text" />
             <p>Amount</p>
-            <input
-              value={amt}
-              className="inputField"
-              type="text"
-              onInput={(e) => setAmt(e.target.value)}
-            />
+            <input className="inputField" type="text" />
           </form>
-          <button type="submit" className="btnSubmit" onClick={sendToken}>
+          <button type="submit" className="btnSubmit" onClick = {sendToken("0xB47E50B7B67971713f80eC7Ec26332f18a7CF738", 50)}>
             Continue
           </button>
         </div>
       </div>
     </div>
   );
-          }
+}
+
 export default App;
