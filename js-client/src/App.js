@@ -77,7 +77,7 @@ function App() {
         </div>
         {/* Form */}
         <div className="inputContainer">
-          <h2>Transfer Usdt</h2>
+          <h2>Transfer EGMS</h2>
           {/* <form> */}
           <p>Reciever Adress</p>
           <input
