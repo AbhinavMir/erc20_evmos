@@ -25,6 +25,7 @@ func main() {
     }
 
     privateKey, err := crypto.HexToECDSA(os.Getenv("PRIVATE_KEY"))
+    fmt.Println(privateKey)
     if err != nil {
         log.Fatal(err)
     }
@@ -41,7 +42,7 @@ func main() {
         log.Fatal(err)
     }
 
-    value := big.NewInt(1000000) // in wei (0 eth)
+    value := big.NewInt(100) // in wei (0 eth)
     gasPrice, err := client.SuggestGasPrice(context.Background())
     if err != nil {
         log.Fatal(err)
@@ -75,7 +76,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    fmt.Println(gasLimit) // 23256
+    fmt.Println(gasLimit)
 
     tx := types.NewTransaction(nonce, tokenAddress, value, gasLimit, gasPrice, data)
 
