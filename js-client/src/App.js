@@ -1,240 +1,25 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
+import genericErc20Abi from "./generic.js";
 
 function App() {
   const [login, setLogIn] = useState(false);
   const [userAddress, setAddress] = useState("");
-  const [userBal, setUserBal] = useState(0);
-  const tokenContractAddress = "0x6aDdAd1d834D015E7eD839A15F586def146d2d2A";
-  const genericErc20Abi = [
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "name",
-        "outputs": [
-            {
-                "name": "",
-                "type": "string"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": false,
-        "inputs": [
-            {
-                "name": "_spender",
-                "type": "address"
-            },
-            {
-                "name": "_value",
-                "type": "uint256"
-            }
-        ],
-        "name": "approve",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "totalSupply",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": false,
-        "inputs": [
-            {
-                "name": "_from",
-                "type": "address"
-            },
-            {
-                "name": "_to",
-                "type": "address"
-            },
-            {
-                "name": "_value",
-                "type": "uint256"
-            }
-        ],
-        "name": "transferFrom",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "decimals",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint8"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [
-            {
-                "name": "_owner",
-                "type": "address"
-            }
-        ],
-        "name": "balanceOf",
-        "outputs": [
-            {
-                "name": "balance",
-                "type": "uint256"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "symbol",
-        "outputs": [
-            {
-                "name": "",
-                "type": "string"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": false,
-        "inputs": [
-            {
-                "name": "_to",
-                "type": "address"
-            },
-            {
-                "name": "_value",
-                "type": "uint256"
-            }
-        ],
-        "name": "transfer",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [
-            {
-                "name": "_owner",
-                "type": "address"
-            },
-            {
-                "name": "_spender",
-                "type": "address"
-            }
-        ],
-        "name": "allowance",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "payable": true,
-        "stateMutability": "payable",
-        "type": "fallback"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "owner",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "name": "spender",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "name": "value",
-                "type": "uint256"
-            }
-        ],
-        "name": "Approval",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "from",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "name": "to",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "name": "value",
-                "type": "uint256"
-            }
-        ],
-        "name": "Transfer",
-        "type": "event"
-    }
-]
+  const [userBal, setUserBal] = useState();
   const [rAdress, setRadress] = useState("");
   const [amt, setAmt] = useState("");
 
+  const tokenContractAddress = "0x6aDdAd1d834D015E7eD839A15F586def146d2d2A";
+  const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(
+    tokenContractAddress,
+    genericErc20Abi,
+    signer
+  );
   const handleMetamask = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
-    const { chainId } = await provider.getNetwork();
+    // const { chainId } = await provider.getNetwork();
     await provider.send("eth_requestAccounts", []);
     const signer = provider.getSigner();
     setLogIn(true);
@@ -246,10 +31,6 @@ function App() {
   };
 
   async function getBalance(wallet) {
-    const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
-    // let balance = await provider.getBalance(wallet);
-    // we use the code below to convert the balance from wei to eth
-    const contract = new ethers.Contract(tokenContractAddress, genericErc20Abi, provider);
     let balance = (await contract.balanceOf(wallet)).toString();
     balance = ethers.utils.formatEther(balance);
     console.log(balance);
@@ -257,15 +38,18 @@ function App() {
   }
 
   async function sendToken() {
-    const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(tokenContractAddress, genericErc20Abi, signer);
-    //console.log(await contract.transfer());
-    const tx = await contract.transfer(rAdress, amt);
-    console.log(tx);
-
+    // var integer = parseInt(amt, 10);
+    // const gweiValue = ethers.utils.formatUnits(integer, "ether");
+    // console.log(gweiValue);
+    // const tx = await contract.transfer(rAdress, integer);
+    const tx = await contract.transfer(rAdress, ethers.utils.parseEther(amt));
     setRadress("");
     setAmt("");
+    // console.log(`Transaction hash: ${tx.hash}`);
+    // const receipt = await tx.wait();
+    // console.log(`Transaction confirmed in block ${receipt.blockNumber}`);
+    // console.log(`Gas used: ${receipt.gasUsed.toString()}`);
+    // console.log(tx);
   }
 
   return (
@@ -294,22 +78,23 @@ function App() {
         {/* Form */}
         <div className="inputContainer">
           <h2>Transfer Usdt</h2>
-          <form>
-            <p>Reciever Adress</p>
-            <input
-              className="inputField"
-              value={rAdress}
-              type="text"
-              onInput={(e) => setRadress(e.target.value)}
-            />
-            <p>Amount</p>
-            <input
-              value={amt}
-              className="inputField"
-              type="text"
-              onInput={(e) => setAmt(e.target.value)}
-            />
-          </form>
+          {/* <form> */}
+          <p>Reciever Adress</p>
+          <input
+            className="inputField"
+            value={rAdress}
+            type="text"
+            onInput={(e) => setRadress(e.target.value)}
+          />
+          <p>Amount</p>
+          <input
+            value={amt}
+            className="inputField"
+            type="text"
+            onInput={(e) => setAmt(e.target.value)}
+          />
+          {/* </form> */}
+          {console.log(rAdress, amt)}
           <button type="submit" className="btnSubmit" onClick={sendToken}>
             Continue
           </button>
@@ -317,5 +102,5 @@ function App() {
       </div>
     </div>
   );
-          }
+}
 export default App;
