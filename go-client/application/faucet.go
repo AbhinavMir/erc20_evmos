@@ -1,4 +1,4 @@
-package faucet
+package main
 
 import (
     "context"
@@ -17,7 +17,8 @@ import (
     "os"
 )
 
-func faucet(toAddressString string) {
+func main() {
+    toAddressString := "0xB47E50B7B67971713f80eC7Ec26332f18a7CF738"
     client, err := ethclient.Dial("https://ethereum.rpc.evmos.dev")
     if err != nil {
         log.Fatal(err)
