@@ -3,5 +3,5 @@ export PRIVATE_KEY=9402.....293
 go mod download
 go mod tidy
 cd application
-go run faucet.go
+go run transferEGMS.go
 ```
