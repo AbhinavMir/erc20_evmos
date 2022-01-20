@@ -1,4 +1,4 @@
-package main
+package faucet
 
 import (
     "context"
@@ -8,7 +8,7 @@ import (
     "math/big"
 
     "golang.org/x/crypto/sha3"
-    "github.com/ethereum/go-ethereum"
+    // "github.com/ethereum/go-ethereum"
     "github.com/ethereum/go-ethereum/common"
     "github.com/ethereum/go-ethereum/common/hexutil"
     "github.com/ethereum/go-ethereum/core/types"
@@ -17,7 +17,7 @@ import (
     "os"
 )
 
-func main() {
+func faucet(toAddressString string) {
     client, err := ethclient.Dial("https://ethereum.rpc.evmos.dev")
     if err != nil {
         log.Fatal(err)
@@ -46,7 +46,7 @@ func main() {
         log.Fatal(err)
     }
 
-    toAddress := common.HexToAddress("0xB47E50B7B67971713f80eC7Ec26332f18a7CF738")
+    toAddress := common.HexToAddress(toAddressString)
     tokenAddress := common.HexToAddress("0x6aDdAd1d834D015E7eD839A15F586def146d2d2A")
 
     transferFnSignature := []byte("transfer(address,uint256)")
@@ -69,7 +69,7 @@ func main() {
     data = append(data, paddedAddress...)
     data = append(data, paddedAmount...)
 
-    gasLimit = uint64(240000)
+    gasLimit := uint64(240000)
 
     if err != nil {
         log.Fatal(err)

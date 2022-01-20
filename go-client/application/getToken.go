@@ -10,7 +10,7 @@ import (
     "github.com/ethereum/go-ethereum/common"
     "github.com/ethereum/go-ethereum/ethclient"
 
-    token "erc20.go"
+    token "./erc20.go"
 )
 
 func main() {

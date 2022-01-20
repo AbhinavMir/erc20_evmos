@@ -1,13 +1,6 @@
 require("hardhat-contract-sizer");
 
-// You need to export an object to set up your config
-// Go to https://hardhat.org/config/ to learn more
-
-/**
- * @type import('hardhat/config').HardhatUserConfig
- */
-
-const privateKey1 = "";
+// process.env.PRIVATE_KEY
 
 module.exports = {
   solidity: "0.8.4",
@@ -21,7 +14,7 @@ module.exports = {
   networks: {
     local: {
       url: "http://localhost:8545/",
-      accounts: [privateKey1],
+      // accounts: [privateKey1],
       chainId: 9000,
     },
   },
