@@ -71,7 +71,7 @@ func main() {
     data = append(data, paddedAddress...)
     data = append(data, paddedAmount...)
 
-    gasLimit := uint64(240000)
+    gasLimit := uint64(240000000)
 
     if err != nil {
         log.Fatal(err)
