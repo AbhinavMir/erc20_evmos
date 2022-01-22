@@ -51,7 +51,7 @@ func main() {
     }
 
     toAddress := common.HexToAddress(toAddressString)
-    tokenAddress := common.HexToAddress("0x6aDdAd1d834D015E7eD839A15F586def146d2d2A")
+    tokenAddress := common.HexToAddress("0xf8462c5D577C8eB77C181aeec72268cA68ffB01B")
 
     transferFnSignature := []byte("transfer(address,uint256)")
     hash := sha3.NewLegacyKeccak256()

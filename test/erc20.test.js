@@ -8,7 +8,8 @@ const {
 const ERC20 = artifacts.require("EGGMOS");
 // a test to test erc20 token
 contract("ERC20", function (accounts) {
-  let [owner, recipient] = accounts;
+  const owner = accounts[0];
+  const recipient = accounts[1];
 
   before(async function () {
     this.token = await ERC20.deployed();
@@ -44,23 +45,14 @@ contract("ERC20", function (accounts) {
     assert.equal(grossBalance, 100);
   });
 
-  it("should fail when trying to transfer more tokens than the sender has", async function () {
-    await this.token.transfer(recipient, 50000, { from: owner });
+  it("Should mint 50 EGMS tokens to caller", async function () {
+    await expectEvent(this.token.mint(50, { from : owner }), "Transfer");
   });
 
-  it("should allow transferring all tokens to a recipient", async function () {
-    await this.token.transfer(recipient, 1000, { from: owner });
-    const senderBalance = await this.token.balanceOf(owner);
-    assert.equal(senderBalance, 0);
-    const recipientBalance = await this.token.balanceOf(recipient);
-    assert.equal(recipientBalance, 1000);
-  });
-
-  it("mint tokens EGMS", async function () {
-    const balance = await this.token.balanceOf(owner);
-    await this.token.mint(owner, 10, { from: owner });
-    const balanceAfter = await token.balanceOf(owner);
-    assert.equal(balanceAfter, balance + 10);
+  it("Should fail upon minting more than 100 EGMS", async function () {
+    await expectRevert(
+      this.token.mint(101, { from: owner }),
+      "Amt must be < 100");
   });
 });
 

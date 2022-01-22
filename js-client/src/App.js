@@ -10,7 +10,7 @@ function App() {
   const [rAdress, setRadress] = useState("");
   const [amt, setAmt] = useState("");
 
-  const tokenContractAddress = "0xF0ce5bcA3597561ADEd27a2649B522E846Ab2aeF";
+  const tokenContractAddress = "0xf8462c5D577C8eB77C181aeec72268cA68ffB01B";
   const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
   const signer = provider.getSigner();
   const contract = new ethers.Contract(
@@ -45,7 +45,7 @@ function App() {
   }
 
   async function mintTokens() {
-    await contract.mint(userAddress, 50);
+    await contract.mint(50);
   }
 
   return (

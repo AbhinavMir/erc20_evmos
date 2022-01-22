@@ -19,7 +19,7 @@ func main() {
         log.Fatal(err)
     }
 
-    tokenAddress := common.HexToAddress("0xbaC6488AB9a46a13d72dD83B3130A9E8FE05B3ce")
+    tokenAddress := common.HexToAddress("0xf8462c5D577C8eB77C181aeec72268cA68ffB01B")
     instance, err := token.NewToken(tokenAddress, client)
     if err != nil {
         log.Fatal(err)
