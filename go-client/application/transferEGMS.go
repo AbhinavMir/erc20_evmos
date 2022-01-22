@@ -18,7 +18,9 @@ import (
 )
 
 func main() {
-    toAddressString := "0xB47E50B7B67971713f80eC7Ec26332f18a7CF738"
+    var toAddressString string
+    fmt.Println("Please input the address you want to transfer to:")
+    fmt.Scanln(&toAddressString)
     client, err := ethclient.Dial("https://ethereum.rpc.evmos.dev")
     if err != nil {
         log.Fatal(err)

@@ -10,7 +10,7 @@ function App() {
   const [rAdress, setRadress] = useState("");
   const [amt, setAmt] = useState("");
 
-  const tokenContractAddress = "0x6aDdAd1d834D015E7eD839A15F586def146d2d2A";
+  const tokenContractAddress = "0xF0ce5bcA3597561ADEd27a2649B522E846Ab2aeF";
   const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
   const signer = provider.getSigner();
   const contract = new ethers.Contract(
@@ -18,6 +18,7 @@ function App() {
     genericErc20Abi,
     signer
   );
+  
   const handleMetamask = async () => {
     // const { chainId } = await provider.getNetwork();
     await provider.send("eth_requestAccounts", []);
@@ -44,8 +45,7 @@ function App() {
   }
 
   async function mintTokens() {
-    const mint_tx = await contract.mint(userAddress, 50);
-    console.log(mint_tx);
+    await contract.mint(userAddress, 50);
   }
 
   return (
