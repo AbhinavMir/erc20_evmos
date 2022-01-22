@@ -1,5 +1,20 @@
 ## EGGMOS
 
+### Instructions to deploy
+
+```
+ganache-cli -p 8545
+truffle deploy
+```
+
+### Instructions to test
+
+```
+truffle test
+```
+
+### Introduction
+
 This is a "meme"-coin of sorts? 
 - Just an ERC20 token with uncapped mints. 
 - I tried to set up an EVMOS node, but it didn't exactly workout. To not waste anymore time, I just used a public RPC. Will probably write a blog about this.
@@ -12,4 +27,28 @@ This is a "meme"-coin of sorts?
 - For testing, I added a simple test via Truffle and OpenZeppelin test helpers. Running `truffle test` in root should give you an idea.
 - The real fun is in Fuzz testing - which I'm implementing via GoLang.
 
-Overall - 10/10 platform, but I may be biased since I run @DocumentCosmos on Twitter.
+### Project Structure
+
+```
+
+├── contracts // Core Contract
+│   └── ERC20.sol
+├── go-client // A Go client for the application - instructions in directory readme
+│   ├── README.md
+│   ├── abigen
+│   ├── application
+│   ├── go.mod
+│   ├── go.sum
+│   └── tests
+├── js-client // A React-based client for the application (transfer + faucet)
+│   ├── README.md
+│   ├── build
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── public
+│   └── src
+├── migrations // Truffle migration files
+│   └── 1_initial_migration.js
+├── test       // A few unit tests for the contract
+│   └── erc20.test.js
+```
