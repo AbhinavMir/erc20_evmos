@@ -66,3 +66,14 @@ File        |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
 All files   |      100 |      100 |      100 |      100 |                |
 ------------|----------|----------|----------|----------|----------------|
 ```
+
+### Technical Decisions taken
+
+- Using Truffle instead of Hardhat: This was mainly due to convenience. I had already spent a decent amount of time learning Go and then building the GUI in React, I chose the path of least resistence and built via Truffle. I've used Hardhat at work, but I've used Truffle frequently, thus the choice. 
+- Using OpenZeppelin's ERC20 contract - I didn't want to reinvent the wheel for diminishing returns, and felt this was the best way to go about things.
+- Deploying via RPC: The local testnet node wouldn't process the trasactions in a few instances, so shifted to using the RPC instead
+
+### What more would I have done 
+
+- Properly configuring CircleCI - I'm new to using CI/CD in Solidity, have to fill in some knowledge gaps.
+- Wrote Table Driven Tests - GoLang is still shabby, I would've preffered to write the tests in GoLang and use Table Driven Tests.
