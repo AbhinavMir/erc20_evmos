@@ -59,7 +59,7 @@ func main() {
     
     // EGMS address and reciever address from HEX
     toAddress := common.HexToAddress(toAddressString)
-    tokenAddress := common.HexToAddress("0xf8462c5D577C8eB77C181aeec72268cA68ffB01B")
+    tokenAddress := common.HexToAddress("0xe3fFAA89E058E916182e3A0e986DEE45cED77A6e")
 
     // Create the transaction   
     transferFnSignature := []byte("transfer(address,uint256)")

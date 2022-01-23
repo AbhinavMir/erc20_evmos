@@ -19,7 +19,11 @@ This is a "meme"-coin of sorts?
 - Just an ERC20 token with uncapped mints. 
 - I tried to set up an EVMOS node, but it didn't exactly workout. To not waste anymore time, I just used a public RPC. Will probably write a blog about this.
 - Deployed on EVMOS Testnet (https://chainlist.org/) 
+<<<<<<< HEAD
 - Add `0xe3fFAA89E058E916182e3A0e986DEE45cED77A6e` as contract to your Metamask. Once done, you're good to go. 
+=======
+- Add `0xf8462c5D577C8eB77C181aeec72268cA68ffB01B` as contract to your Metamask. Once done, you're good to go. 
+>>>>>>> 1d5b6fad298f57fc46ac7f1a31afba9f89a8f929
 - Now visit the faucet (https://evmoserc20test.netlify.app/) and mint 50 EGMS. 
 - You can transfer between accounts using your metamask or the frontend given above.
 - To do the same via Golang, you can try the following in root `go run go-client/application/transferEGMS.go`
@@ -66,3 +70,14 @@ File        |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
 All files   |      100 |      100 |      100 |      100 |                |
 ------------|----------|----------|----------|----------|----------------|
 ```
+
+### Technical Decisions taken
+
+- Using Truffle instead of Hardhat: This was mainly due to convenience. I had already spent a decent amount of time learning Go and then building the GUI in React, I chose the path of least resistence and built via Truffle. I've used Hardhat at work, but I've used Truffle frequently, thus the choice. 
+- Using OpenZeppelin's ERC20 contract - I didn't want to reinvent the wheel for diminishing returns, and felt this was the best way to go about things.
+- Deploying via RPC: The local testnet node wouldn't process the trasactions in a few instances, so shifted to using the RPC instead
+
+### What more would I have done 
+
+- Properly configuring CircleCI - I'm new to using CI/CD in Solidity, have to fill in some knowledge gaps.
+- Wrote Table Driven Tests - GoLang is still shabby, I would've preffered to write the tests in GoLang and use Table Driven Tests.
