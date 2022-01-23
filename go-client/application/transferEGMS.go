@@ -18,41 +18,50 @@ import (
 )
 
 func main() {
+    // User input for reciever address 
     var toAddressString string
     fmt.Println("Please input the address you want to transfer to:")
     fmt.Scanln(&toAddressString)
+
+    // Connect to RPC
     client, err := ethclient.Dial("https://ethereum.rpc.evmos.dev")
     if err != nil {
         log.Fatal(err)
     }
 
+    // Get the private key via OS Environment
     privateKey, err := crypto.HexToECDSA(os.Getenv("PRIVATE_KEY"))
     fmt.Println(privateKey)
     if err != nil {
         log.Fatal(err)
     }
 
+    // Get the public key via private key
     publicKey := privateKey.Public()
     publicKeyECDSA, ok := publicKey.(*ecdsa.PublicKey)
     if !ok {
         log.Fatal("cannot assert type: publicKey is not of type *ecdsa.PublicKey")
     }
 
+    // Get the address via public key
     fromAddress := crypto.PubkeyToAddress(*publicKeyECDSA)
     nonce, err := client.PendingNonceAt(context.Background(), fromAddress)
     if err != nil {
         log.Fatal(err)
     }
 
+    // Get suggested gas price
     value := big.NewInt(100) // in wei (0 eth)
     gasPrice, err := client.SuggestGasPrice(context.Background())
     if err != nil {
         log.Fatal(err)
     }
-
+    
+    // EGMS address and reciever address from HEX
     toAddress := common.HexToAddress(toAddressString)
     tokenAddress := common.HexToAddress("0xf8462c5D577C8eB77C181aeec72268cA68ffB01B")
 
+    // Create the transaction   
     transferFnSignature := []byte("transfer(address,uint256)")
     hash := sha3.NewLegacyKeccak256()
     hash.Write(transferFnSignature)
@@ -80,6 +89,7 @@ func main() {
     }
     fmt.Println(gasLimit)
 
+    // Create the transaction
     tx := types.NewTransaction(nonce, tokenAddress, value, gasLimit, gasPrice, data)
 
     chainID, err := client.NetworkID(context.Background())
