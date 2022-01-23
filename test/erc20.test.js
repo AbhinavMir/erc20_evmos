@@ -46,7 +46,7 @@ contract("ERC20", function (accounts) {
   });
 
   it("Should mint 50 EGMS tokens to caller", async function () {
-    await expectEvent(this.token.mint(50, { from : owner }), "Transfer");
+    expectEvent(await this.token.mint(50, { from : owner }), "mintAmount");
   });
 
   it("Should fail upon minting more than 100 EGMS", async function () {

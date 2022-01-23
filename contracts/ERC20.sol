@@ -10,9 +10,12 @@ contract EGGMOS is ERC20, Ownable {
         _mint(msg.sender, 100000 * 10 ** decimals());
     }
 
+    event mintAmount(address indexed to, uint256 value);
     function mint( uint256 amount) public {
         require(amount<=100, "Amt must be < 100");
         amount = amount *10**decimals();
         _mint(msg.sender, amount);
+
+        emit mintAmount(msg.sender, amount);
     }
 }
