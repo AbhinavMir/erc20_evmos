@@ -10,7 +10,7 @@ function App() {
   const [rAdress, setRadress] = useState("");
   const [amt, setAmt] = useState("");
 
-  const tokenContractAddress = "0xf8462c5D577C8eB77C181aeec72268cA68ffB01B";
+  const tokenContractAddress = "0xe3fFAA89E058E916182e3A0e986DEE45cED77A6e";
   const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
   const signer = provider.getSigner();
   const contract = new ethers.Contract(
@@ -40,6 +40,7 @@ function App() {
 
   async function sendToken() {
     const tx = await contract.transfer(rAdress, ethers.utils.parseEther(amt));
+    console.log(tx);
     setRadress("");
     setAmt("");
   }

@@ -16,7 +16,6 @@ contract("ERC20", function (accounts) {
   });
 
   it("Checks new deployed contract", async function () {
-    // const token = await ERC20.deployed();
     assert.ok(this.token.address);
   });
 
