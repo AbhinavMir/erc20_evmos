@@ -19,7 +19,7 @@ This is a "meme"-coin of sorts?
 - Just an ERC20 token with uncapped mints. 
 - I tried to set up an EVMOS node, but it didn't exactly workout. To not waste anymore time, I just used a public RPC. Will probably write a blog about this.
 - Deployed on EVMOS Testnet (https://chainlist.org/) 
-- Add `0x6aDdAd1d834D015E7eD839A15F586def146d2d2A` as contract to your Metamask. Once done, you're good to go. 
+- Add `0xf8462c5D577C8eB77C181aeec72268cA68ffB01B` as contract to your Metamask. Once done, you're good to go. 
 - Now visit the faucet (https://evmoserc20test.netlify.app/) and mint 50 EGMS. 
 - You can transfer between accounts using your metamask or the frontend given above.
 - To do the same via Golang, you can try the following in root `go run go-client/application/transferEGMS.go`
